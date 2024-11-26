@@ -7,7 +7,7 @@ public abstract class Prestamo
     public decimal Monto { get; set; }
     public decimal TasaInteresAnual { get; protected set; }
     public TipoPrestamo Tipo { get; protected set; }
-    public DateTime FechaInicio { get; protected set; }
+    public DateTime fechaInicio { get; protected set; }
     public Guid PrestamoNro { get; set; }
 
     protected Prestamo(Persona persona, Plazo plazo, decimal monto, DateTime fechaInicio)
@@ -15,7 +15,14 @@ public abstract class Prestamo
         Persona = persona;
         Plazo = plazo;
         Monto = monto;
-        FechaInicio = fechaInicio;
+        fechaInicio = fechaInicio;
+    }
+
+    protected Prestamo(Persona persona, Plazo plazo, decimal monto)
+    {
+        Persona = persona;
+        Plazo = plazo;
+        Monto = monto;
     }
 
     public abstract void ConfigurarTasaIntereses();
@@ -36,7 +43,7 @@ public abstract class Prestamo
     {
         List<Cuota> cuotas = new List<Cuota>();
         decimal saldoRestante = Monto;
-        DateTime fechaVencimiento = FechaInicio.AddMonths(1);
+        DateTime fechaVencimiento = fechaInicio.AddMonths(1);
 
         for (int i = 1; i <= (int)Plazo; i++)
         {

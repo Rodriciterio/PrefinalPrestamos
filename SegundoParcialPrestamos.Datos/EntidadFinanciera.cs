@@ -4,7 +4,7 @@ namespace SegundoParcialPrestamos.Datos
 {
     public class EntidadFinanciera
     {
-        private readonly List<Prestamo> _prestamos;
+        private List<Prestamo> _prestamos = new List<Prestamo>();
         public string Nombre { get; }
         private SerializadorJson SerializadorJson;
         private Dictionary<string, PrestamoPesos> _pesos;
@@ -37,7 +37,7 @@ namespace SegundoParcialPrestamos.Datos
         {
             return _prestamos.Any(p =>
                 p.Persona.Equals(prestamo.Persona) &&
-                p.FechaInicio == prestamo.FechaInicio &&
+                p.fechaInicio == prestamo.fechaInicio &&
                 p.Monto == prestamo.Monto &&
                 p.Plazo == prestamo.Plazo &&
                 p.Tipo == prestamo.Tipo);
@@ -50,7 +50,15 @@ namespace SegundoParcialPrestamos.Datos
 
         public List<Prestamo> GetPrestamos(TipoPrestamo tipo)
         {
-            return tipo == TipoPrestamo.Todos ? _prestamos : _prestamos.Where(p => p.Tipo == tipo).ToList();
+            if (_prestamos == null)
+                throw new InvalidOperationException("La colección de préstamos no ha sido inicializada.");
+
+            if (tipo == null)
+                throw new ArgumentNullException(nameof(tipo));
+
+            return tipo == TipoPrestamo.Todos
+                ? _prestamos
+                : _prestamos.Where(p => p.Tipo == tipo).ToList();
         }
 
         public int GetCantidad(TipoPrestamo tipo)

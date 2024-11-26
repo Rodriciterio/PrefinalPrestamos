@@ -36,7 +36,7 @@
                 case Prestamo prestamo:
                     r.Cells[0].Value = prestamo.PrestamoNro;
                     r.Cells[1].Value = prestamo.Persona!.ToString();
-                    r.Cells[2].Value = prestamo.FechaInicio.ToShortDateString();
+                    r.Cells[2].Value = prestamo.fechaInicio.ToShortDateString();
                     r.Cells[3].Value = prestamo.GetType() == typeof(PrestamoDolares) ? "Dólares" : "Pesos";
                     r.Cells[4].Value = prestamo.Monto.ToString("C2");
                     r.Cells[5].Value = prestamo.Plazo.GetHashCode();
